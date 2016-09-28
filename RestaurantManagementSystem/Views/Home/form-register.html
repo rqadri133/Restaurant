@@ -1,0 +1,86 @@
+﻿
+        <table>
+            <tr>
+                <!-- SUPERHERO NAME -->
+                <td>
+                    <div class="form-group">
+                        <label>User Name</label>
+                        <input ng-model="orderCtrl.yourname" id="username" type="text" name="username" class="form-control">
+                        <span class="help-block"></span>
+                    </div>
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input ng-model="orderCtrl.password" id="pwd" type="password" name="Password" class="form-control">
+                        <span class="help-block"></span>
+                    </div>
+
+                </td>
+
+            </tr>
+            <tr>
+                <td>
+                    <div class="form-group">
+                        <label>Confirm Password</label>
+                        <input ng-model="orderCtrl.confpassword" id="confpwd" type="password" name="ConfirmPassword" class="form-control">
+                        <span class="help-block"></span>
+                    </div>
+
+                </td>
+            </tr>
+
+
+            <tr>
+                <td>
+                    <div class="form-group">
+                        <label>EmailAddress</label>
+                        <input ng-model="orderCtrl.emailaddress" id="emailAddress" type="email" name="EmailAddress" class="form-control">
+                        <span class="help-block"></span>
+                    </div>
+
+                </td>
+
+
+            </tr>
+
+            <tr>
+                <td>
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <input ng-model="orderCtrl.phone" id="phoneNumber" type="text" name="phoneNumber" class="form-control">
+                        <span class="help-block"></span>
+                    </div>
+
+                </td>
+
+
+            </tr>
+            <tr>
+
+                <td>
+
+                    <button id="btnSaveNewUser" type="button" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-save"></span> Register
+                    </button>
+                    <button ng-click="reset()" id="btnCancelRegister" type="reset" class="btn btn-danger">
+                        <span class="glyphicon glyphicon-erase"></span> Cancel
+                    </button>
+
+                    <button ng-click="orderCtrl.goBack()" id="btnGoBack" type="button" class="btn btn-success">
+                        <span class="glyphicon glyphicon-step-backward"></span> Go Back
+                    </button>
+
+                </td>
+            </tr>
+
+
+
+        </table>
+
+
+
+    

@@ -1,0 +1,451 @@
+﻿<script src="~/Scripts/ng-grid.js"></script>
+<script src="~/Scripts/ng-grid.min.js"></script>
+<link href="~/Content/ng-grid.css" rel="stylesheet" />
+<link href="~/Content/ng-grid.min.css" rel="stylesheet" />
+<link href="~/Scripts/jquery-2.1.4.min.js" rel="stylesheet"/>
+
+
+
+<div>
+    <div class="col-md-offset-1" ng-controller="OrderController as orderCtrl">
+        <div class="widget wviolet">
+            <div class="page-header">
+                <h3 ng-show="orderCtrl.showDHeader">
+                    <span class="glyphicon glyphicon-home">
+                    </span>
+                    Select Delivery Or Carry Out
+                    <button id="btnSignInForFastDelivery" type="button" ng-click="orderCtrl.showSignInInfo()" title="Sign In" class="btn btn-primary">
+                        Sign In For Fast Delivery
+                    </button>
+                    <button id="btnRegister" type="button" ng-click="orderCtrl.showNewUserInfo()" title="Create Account" class="btn btn-primary">
+                        Don't have account Register to Create One
+                    </button>
+                </h3>
+                <h3 ng-show="viewFoodList">
+                    <span class="glyphicon glyphicon-apple">
+                    </span>
+                    {{customHeaderInfo }}
+                </h3>
+                <h3 ng-show="orderCtrl.showRHeader">
+
+                    <span class="glyphicon glyphicon-user">
+                    </span>
+                    Register New User
+
+                </h3>
+
+                <h3 ng-show="orderCtrl.showSignInHeader">
+                    <span class="glyphicon glyphicon-user">
+                    </span>
+                    Sign In To View/Give Order
+                </h3>
+            </div>
+
+            <div id="showOptions" ng-show="orderCtrl.showOptions">
+                <div class=" btn btn-toolbar">
+                    <button id="btnDeliver" ng-click="orderCtrl.showPersonInfoEditor()" type="button" title="Deilver to Home" class="btn btn-primary">
+                        <img src="~/images/deilveryimage.jpg" />
+                    </button>
+                    --Or--
+                    <button ng-click="orderCtrl.showPickUpOnly()" id="btnPickUp" type="button" title="I will pick up" class="btn btn-primary">
+                        <img src="~/images/carryOut.jpg" />
+                    </button>
+
+                </div>
+
+
+
+            </div>
+
+            <div id="messages" hidden="hidden">
+                <label class="label label-primary">
+                </label>
+                <label id="errorMessage" />
+            </div>
+
+            <!---- Learning Angualr JS dont want to use JQuery  or Backbone model-->
+
+
+            <div>
+
+
+
+                <form id="fromReg">
+                    <div class="col-md-offset-1" ng-show="orderCtrl.showRegister">
+                        <table>
+                            <tr>
+                            <tr>
+                                <!-- SUPERHERO NAME -->
+                                <td>
+                                    <div class="form-group">
+                                        <label>User Name</label>
+                                        <input ng-model="orderCtrl.yourname" id="username" type="text" name="username" class="form-control">
+                                        <span class="help-block"></span>
+                                    </div>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="form-group">
+                                        <label>Password</label>
+                                        <input ng-model="orderCtrl.password" id="pwd" type="password" name="Password" class="form-control">
+                                        <span class="help-block"></span>
+                                    </div>
+
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="form-group">
+                                        <label>Confirm Password</label>
+                                        <input ng-model="orderCtrl.confpassword" id="confpwd" type="password" name="ConfirmPassword" class="form-control">
+                                        <span class="help-block"></span>
+                                    </div>
+
+                                </td>
+                            </tr>
+
+
+                            <tr>
+                                <td>
+                                    <div class="form-group">
+                                        <label>EmailAddress</label>
+                                        <input ng-model="orderCtrl.emailaddress" id="emailAddress" type="email" name="EmailAddress" class="form-control">
+                                        <span class="help-block"></span>
+                                    </div>
+
+                                </td>
+
+
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <div class="form-group">
+                                        <label>Phone</label>
+                                        <input ng-model="orderCtrl.phone" id="phoneNumber" type="text" name="phoneNumber" class="form-control">
+                                        <span class="help-block"></span>
+                                    </div>
+
+                                </td>
+
+
+                            </tr>
+                            <tr>
+
+                                <td>
+
+                                    <button id="btnSaveNewUser" type="button" class="btn btn-primary">
+                                        <span class="glyphicon glyphicon-save"></span> Register
+                                    </button>
+                                    <button ng-click="reset()" id="btnCancelRegister" type="reset" class="btn btn-danger">
+                                        <span class="glyphicon glyphicon-erase"></span> Cancel
+                                    </button>
+
+                                    <button ng-click="orderCtrl.goBack()" id="btnGoBack" type="button" class="btn btn-success">
+                                        <span class="glyphicon glyphicon-step-backward"></span> Go Back
+                                    </button>
+
+                                </td>
+                            </tr>
+
+
+
+                        </table>
+
+
+
+                    </div>
+                </form>
+
+                <form id="showSignIn">
+
+                    <div class="col-md-offset-1" ng-show="orderCtrl.showSignIn">
+                        <table>
+                            <tr>
+                            <tr>
+                                <!-- SUPERHERO NAME -->
+                                <td>
+                                    <div class="form-group">
+                                        <label>User Name</label>
+                                        <input ng-model="orderCtrl.yourname" id="username" type="text" name="username" class="form-control">
+                                        <span class="help-block"></span>
+                                    </div>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="form-group">
+                                        <label>Password</label>
+                                        <input ng-model="orderCtrl.password" id="pwd" type="password" name="Password" class="form-control">
+                                        <span class="help-block"></span>
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                            <tr>
+
+                                <td>
+
+                                    <button id="btnLogin" type="button" class="btn btn-primary">
+                                        <span class="glyphicon glyphicon-user"></span> Login
+                                    </button>
+                                    <button ng-click="reset()" id="btnCancelSignIn" type="reset" class="btn btn-danger">
+                                        <span class="glyphicon glyphicon-erase"></span> Cancel
+                                    </button>
+                                    <button ng-click="orderCtrl.goBack()" type="button" class="btn btn-success">
+                                        <span class="glyphicon glyphicon-step-backward"></span> Go Back
+                                    </button>
+
+                                </td>
+                            </tr>
+
+
+
+                        </table>
+
+
+
+                    </div>
+
+                </form>
+                <form id="frmDelivery">
+                    <div class="col-md-offset-4" ng-show="orderCtrl.showdelivery">
+                        <table>
+                            <tr>
+                                <!-- SUPERHERO NAME -->
+                                <td>
+                                    <div id="phone" class="form-group">
+                                        <label>Phone</label>
+                                        <input ng-model="orderCtrl.phone" id="address" type="text" name="Address" class="form-control">
+                                        <span class="help-block"></span>
+                                    </div>
+
+                                </td>
+                                <td>
+                                    <div id="superhero-group" class="form-group">
+                                        <label>Street Address</label>
+                                        <input ng-model="orderCtrl.address" id="address" type="text" name="Address" class="form-control">
+                                        <span class="help-block"></span>
+                                    </div>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div>
+                                        <label>State</label>
+                                        <input ng-model="orderCtrl.state" id="state" type="text" name="Address" class="form-control">
+                                        <span class="help-block"></span>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <div>
+                                        <label>Zip Code</label>
+                                        <input ng-model="orderCtrl.zipcode" id="zipcode" type="text" name="Address" class="form-control">
+                                        <span class="help-block"></span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>
+
+                                    &nbsp;
+                                    &nbsp;
+                                    &nbsp;
+
+                                </td>
+
+                            </tr>
+                            <!-- SUBMIT BUTTON -->
+                            <tr>
+
+                                <td>
+
+                                    <button ng-click="orderCtrl.showProcessOrderInfo()" id="btnSaveUserDelInfo" type="button" class="btn btn-primary">
+                                        <span class="glyphicon glyphicon-save"></span> Submit!
+                                    </button>
+                                    <button ng-click="reset()" id="btnCancelUserOrderInfo" type="reset" class="btn btn-danger">
+                                        <span class="glyphicon glyphicon-erase"></span> Cancel
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </form>
+
+                <form id="frmPickUp">
+
+                    <div class="col-md-offset-4" ng-show="orderCtrl.showpickup">
+                        <table>
+                            <tr>
+                                <!-- SUPERHERO NAME -->
+                                <td>
+                                    <div id="phoneNumberOnly" class="form-group">
+                                        <label>Phone</label>
+                                        <input ng-model="orderCtrl.phone" id="address" type="text" name="Address" class="form-control">
+                                        <span class="help-block"></span>
+                                    </div>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div>
+                                        <label>Email Address</label>
+                                        <input ng-model="orderCtrl.emailaddress" id="emailaddress" type="email" name="Email Address" class="form-control">
+                                        <span class="help-block"></span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>
+
+                                    &nbsp;
+                                    &nbsp;
+                                    &nbsp;
+
+                                </td>
+
+                            </tr>
+                            <!-- SUBMIT BUTTON -->
+                            <tr>
+
+                                <td>
+
+                                    <button   id="btnSavePickUpInfo" ng-click="orderCtrl.showProcessOrderInfo()" type="button" class="btn btn-primary">
+                                        <span class="glyphicon glyphicon-save"></span> Submit!
+                                    </button>
+                                    <button ng-click="reset()" id="btnCancelPickUp" type="reset" class="btn btn-danger">
+                                        <span class="glyphicon glyphicon-erase"></span> Cancel
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                </form>
+
+
+                <div>
+                    <form id="fromProcessOrder">
+                        <div class="col-md-offset-2" ng-show="orderCtrl.showProcessOrder">
+
+                            <table>
+                                <tr>
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td>
+
+                                                    <label> Food Name </label>
+                                                </td>
+                                                <td>
+                                                    <select ng-model="selectedFoods" ng-change="getAllFoodsByMenuType()" ng-options="MenuType.MenuTypeID as MenuType.MenuTypeName for MenuType  in selectFoodList">
+                                                        <option value="">Select Menu Type</option>
+                                                    </select>
+
+
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label> Available Food </label>
+                                                </td>
+                                                <td>
+
+                                                    <select ng-model="foodItem" ng-change="loadFoodDescription()" ng-options="FoodProxy.FoodID as FoodProxy.FoodName for FoodProxy  in foodItems">
+                                                        <option value="">Select Your Food</option>
+                                                    </select>
+                                                </td>
+
+                                            </tr>
+
+                                            <tr>
+                                                <td>
+                                                    <div ng-show="showSelectedFood" class="text-container">
+
+                                                        <textarea style="font-family:Comic Sans MS" readonly="readonly" rows="10" cols="100">{{ Notes}}</textarea>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div ng-show="showSelectedFood">
+                                                        <image ng-src="~/images/{{imagePath}}" />
+                                                    </div>
+
+                                                </td>
+                                            </tr>
+
+                                        </table>
+
+
+                                    </td>
+                                
+                                </tr>
+
+
+                            </table>
+                                                    
+                            </div>
+                       
+
+                    </form> 
+                </div>
+                
+
+
+            </div>
+
+
+
+
+        </div>
+        <div class="widget-foot">
+            <div class="clearfix"></div>
+        </div>
+
+
+    </div>
+
+    
+    
+
+
+</div>
+
+@section scripts
+{
+<link href="~/Content/ng-grid.css" rel="stylesheet" />
+<link href="~/Content/ng-grid.min.css" rel="stylesheet" />
+
+
+
+<script src="~/Scripts/jquery-2.1.4.js"> </script>
+<script src="~/Scripts/jquery-2.1.4.min.js"> </script>
+
+<script src="~/Scripts/bootstrap.js"></script>
+
+<script src="~/Scripts/bootstrap.min.js"> </script>
+<script src="~/Scripts/bootstrap-datepicker.js"> </script>
+<script src="~/Scripts/bootstrap-datepicker.min.js"> </script>
+<script src="~/Scripts/ng-grid.js"></script>
+<script src="~/Scripts/ng-grid.min.js"></script>
+
+
+
+} 

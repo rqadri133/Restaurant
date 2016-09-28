@@ -1,0 +1,513 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="OasisRestaurantModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Customers">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+          </Key>
+          <Property Name="CustomerID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CustomerName" Type="nvarchar" MaxLength="500" />
+          <Property Name="Address1" Type="nvarchar" MaxLength="100" />
+          <Property Name="Address2" Type="nvarchar" MaxLength="100" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="12" />
+        </EntityType>
+        <EntityType Name="DeliveryDriverInfoes">
+          <Key>
+            <PropertyRef Name="DeliveryVanID" />
+          </Key>
+          <Property Name="DeliveryVanID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="DeliveryDriverPersonName" Type="nvarchar" MaxLength="100" />
+          <Property Name="DeliveryVehicleID" Type="nvarchar" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="Drinks">
+          <Key>
+            <PropertyRef Name="DrinkID" />
+          </Key>
+          <Property Name="DrinkID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="DrinkName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Notes" Type="nvarchar" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="Foods">
+          <Key>
+            <PropertyRef Name="FoodID" />
+          </Key>
+          <Property Name="FoodID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="FoodName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Notes" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Price" Type="decimal" Precision="12" Scale="2" />
+          <Property Name="DiscountPrice" Type="decimal" Precision="12" Scale="2" />
+          <Property Name="MenuTypeID" Type="uniqueidentifier" />
+          <Property Name="imagePath" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Locations">
+          <Key>
+            <PropertyRef Name="LocationID" />
+          </Key>
+          <Property Name="LocationID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="LocationName" Type="nvarchar" MaxLength="500" />
+          <Property Name="LocationZipCode" Type="nvarchar" MaxLength="11" />
+        </EntityType>
+        <EntityType Name="MenuType">
+          <Key>
+            <PropertyRef Name="MenuTypeID" />
+          </Key>
+          <Property Name="MenuTypeID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="MenuTypeName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="OrderDeliveries">
+          <Key>
+            <PropertyRef Name="OrderDeliveryID" />
+          </Key>
+          <Property Name="OrderDeliveryID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="OrderID" Type="uniqueidentifier" />
+          <Property Name="DeliveryID" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="OrderDetails">
+          <Key>
+            <PropertyRef Name="OrderDetailID" />
+          </Key>
+          <Property Name="OrderDetailID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="OrderID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="FoodID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="DrinkID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Notes" Type="nvarchar" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="OrderID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="OrderDescription" Type="nvarchar" MaxLength="500" />
+          <Property Name="OrderDateTime" Type="datetime" />
+          <Property Name="OrderPerson" Type="nvarchar" MaxLength="500" />
+          <Property Name="DeliveryAddress" Type="nvarchar" MaxLength="1000" />
+          <Property Name="OrderPersonPhone" Type="nvarchar" MaxLength="13" />
+          <Property Name="OrderOriginalPrice" Type="decimal" Precision="12" Scale="2" />
+          <Property Name="OrderStatusID" Type="uniqueidentifier" />
+          <Property Name="OrderDiscountedPrice" Type="decimal" Precision="12" Scale="2" />
+        </EntityType>
+        <EntityType Name="OrderStatus">
+          <Key>
+            <PropertyRef Name="OrderStatusID" />
+          </Key>
+          <Property Name="OrderStatusID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="OrderStatusName" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Stores">
+          <Key>
+            <PropertyRef Name="StoreID" />
+          </Key>
+          <Property Name="StoreID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="StoreName" Type="nvarchar" MaxLength="500" />
+          <Property Name="State" Type="nvarchar" MaxLength="100" />
+          <Property Name="City" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="UserAdmins">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="500" />
+          <Property Name="Pwd" Type="nvarchar" MaxLength="100" />
+          <Property Name="StoreID" Type="uniqueidentifier" />
+        </EntityType>
+        <Association Name="FK__OrderDeta__Drink__2E1BDC42">
+          <End Role="Drinks" Type="Self.Drinks" Multiplicity="1" />
+          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Drinks">
+              <PropertyRef Name="DrinkID" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="DrinkID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrderDeta__FoodI__2D27B809">
+          <End Role="Foods" Type="Self.Foods" Multiplicity="1" />
+          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Foods">
+              <PropertyRef Name="FoodID" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="FoodID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrderDeta__Order__2C3393D0">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="OasisRestaurantModelStoreContainer">
+          <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DeliveryDriverInfoes" EntityType="Self.DeliveryDriverInfoes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Drinks" EntityType="Self.Drinks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Foods" EntityType="Self.Foods" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Locations" EntityType="Self.Locations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MenuType" EntityType="Self.MenuType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderDeliveries" EntityType="Self.OrderDeliveries" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderDetails" EntityType="Self.OrderDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderStatus" EntityType="Self.OrderStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Stores" EntityType="Self.Stores" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserAdmins" EntityType="Self.UserAdmins" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__OrderDeta__Drink__2E1BDC42" Association="Self.FK__OrderDeta__Drink__2E1BDC42">
+            <End Role="Drinks" EntitySet="Drinks" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrderDeta__FoodI__2D27B809" Association="Self.FK__OrderDeta__FoodI__2D27B809">
+            <End Role="Foods" EntitySet="Foods" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrderDeta__Order__2C3393D0" Association="Self.FK__OrderDeta__Order__2C3393D0">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="OasisRestaurantModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+          </Key>
+          <Property Name="CustomerID" Type="Guid" Nullable="false" />
+          <Property Name="CustomerName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Address1" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Address2" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="DeliveryDriverInfo">
+          <Key>
+            <PropertyRef Name="DeliveryVanID" />
+          </Key>
+          <Property Name="DeliveryVanID" Type="Guid" Nullable="false" />
+          <Property Name="DeliveryDriverPersonName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DeliveryVehicleID" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Drink">
+          <Key>
+            <PropertyRef Name="DrinkID" />
+          </Key>
+          <Property Name="DrinkID" Type="Guid" Nullable="false" />
+          <Property Name="DrinkName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Notes" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="OrderDetails" Relationship="Self.FK__OrderDeta__Drink__2E1BDC42" FromRole="Drinks" ToRole="OrderDetails" />
+        </EntityType>
+        <EntityType Name="Food">
+          <Key>
+            <PropertyRef Name="FoodID" />
+          </Key>
+          <Property Name="FoodID" Type="Guid" Nullable="false" />
+          <Property Name="FoodName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Notes" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Decimal" Precision="12" Scale="2" />
+          <Property Name="DiscountPrice" Type="Decimal" Precision="12" Scale="2" />
+          <Property Name="MenuTypeID" Type="Guid" />
+          <NavigationProperty Name="OrderDetails" Relationship="Self.FK__OrderDeta__FoodI__2D27B809" FromRole="Foods" ToRole="OrderDetails" />
+          <Property Name="imagePath" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="LocationID" />
+          </Key>
+          <Property Name="LocationID" Type="Guid" Nullable="false" />
+          <Property Name="LocationName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="LocationZipCode" Type="String" MaxLength="11" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="MenuType">
+          <Key>
+            <PropertyRef Name="MenuTypeID" />
+          </Key>
+          <Property Name="MenuTypeID" Type="Guid" Nullable="false" />
+          <Property Name="MenuTypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="OrderDelivery">
+          <Key>
+            <PropertyRef Name="OrderDeliveryID" />
+          </Key>
+          <Property Name="OrderDeliveryID" Type="Guid" Nullable="false" />
+          <Property Name="OrderID" Type="Guid" />
+          <Property Name="DeliveryID" Type="Guid" />
+        </EntityType>
+        <EntityType Name="OrderDetail">
+          <Key>
+            <PropertyRef Name="OrderDetailID" />
+          </Key>
+          <Property Name="OrderDetailID" Type="Guid" Nullable="false" />
+          <Property Name="OrderID" Type="Guid" Nullable="false" />
+          <Property Name="FoodID" Type="Guid" Nullable="false" />
+          <Property Name="DrinkID" Type="Guid" Nullable="false" />
+          <Property Name="Notes" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Drink" Relationship="Self.FK__OrderDeta__Drink__2E1BDC42" FromRole="OrderDetails" ToRole="Drinks" />
+          <NavigationProperty Name="Food" Relationship="Self.FK__OrderDeta__FoodI__2D27B809" FromRole="OrderDetails" ToRole="Foods" />
+          <NavigationProperty Name="Order" Relationship="Self.FK__OrderDeta__Order__2C3393D0" FromRole="OrderDetails" ToRole="Orders" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="OrderID" Type="Guid" Nullable="false" />
+          <Property Name="OrderDescription" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="OrderDateTime" Type="DateTime" Precision="3" />
+          <Property Name="OrderPerson" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="DeliveryAddress" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="OrderPersonPhone" Type="String" MaxLength="13" FixedLength="false" Unicode="true" />
+          <Property Name="OrderOriginalPrice" Type="Decimal" Precision="12" Scale="2" />
+          <Property Name="OrderStatusID" Type="Guid" />
+          <Property Name="OrderDiscountedPrice" Type="Decimal" Precision="12" Scale="2" />
+          <NavigationProperty Name="OrderDetails" Relationship="Self.FK__OrderDeta__Order__2C3393D0" FromRole="Orders" ToRole="OrderDetails" />
+        </EntityType>
+        <EntityType Name="OrderStatu">
+          <Key>
+            <PropertyRef Name="OrderStatusID" />
+          </Key>
+          <Property Name="OrderStatusID" Type="Guid" Nullable="false" />
+          <Property Name="OrderStatusName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Store">
+          <Key>
+            <PropertyRef Name="StoreID" />
+          </Key>
+          <Property Name="StoreID" Type="Guid" Nullable="false" />
+          <Property Name="StoreName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="UserAdmin">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Guid" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Pwd" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="StoreID" Type="Guid" />
+        </EntityType>
+        <Association Name="FK__OrderDeta__Drink__2E1BDC42">
+          <End Role="Drinks" Type="Self.Drink" Multiplicity="1" />
+          <End Role="OrderDetails" Type="Self.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Drinks">
+              <PropertyRef Name="DrinkID" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="DrinkID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrderDeta__FoodI__2D27B809">
+          <End Role="Foods" Type="Self.Food" Multiplicity="1" />
+          <End Role="OrderDetails" Type="Self.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Foods">
+              <PropertyRef Name="FoodID" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="FoodID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrderDeta__Order__2C3393D0">
+          <End Role="Orders" Type="Self.Order" Multiplicity="1" />
+          <End Role="OrderDetails" Type="Self.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="OasisRestaurantEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Customers" EntityType="Self.Customer" />
+          <EntitySet Name="DeliveryDriverInfoes" EntityType="Self.DeliveryDriverInfo" />
+          <EntitySet Name="Drinks" EntityType="Self.Drink" />
+          <EntitySet Name="Foods" EntityType="Self.Food" />
+          <EntitySet Name="Locations" EntityType="Self.Location" />
+          <EntitySet Name="MenuTypes" EntityType="Self.MenuType" />
+          <EntitySet Name="OrderDeliveries" EntityType="Self.OrderDelivery" />
+          <EntitySet Name="OrderDetails" EntityType="Self.OrderDetail" />
+          <EntitySet Name="Orders" EntityType="Self.Order" />
+          <EntitySet Name="OrderStatus" EntityType="Self.OrderStatu" />
+          <EntitySet Name="Stores" EntityType="Self.Store" />
+          <EntitySet Name="UserAdmins" EntityType="Self.UserAdmin" />
+          <AssociationSet Name="FK__OrderDeta__Drink__2E1BDC42" Association="Self.FK__OrderDeta__Drink__2E1BDC42">
+            <End Role="Drinks" EntitySet="Drinks" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrderDeta__FoodI__2D27B809" Association="Self.FK__OrderDeta__FoodI__2D27B809">
+            <End Role="Foods" EntitySet="Foods" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrderDeta__Order__2C3393D0" Association="Self.FK__OrderDeta__Order__2C3393D0">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="OasisRestaurantModelStoreContainer" CdmEntityContainer="OasisRestaurantEntities">
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="OasisRestaurantModel.Customer">
+              <MappingFragment StoreEntitySet="Customers">
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="Address1" ColumnName="Address1" />
+                <ScalarProperty Name="Address2" ColumnName="Address2" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DeliveryDriverInfoes">
+            <EntityTypeMapping TypeName="OasisRestaurantModel.DeliveryDriverInfo">
+              <MappingFragment StoreEntitySet="DeliveryDriverInfoes">
+                <ScalarProperty Name="DeliveryVanID" ColumnName="DeliveryVanID" />
+                <ScalarProperty Name="DeliveryDriverPersonName" ColumnName="DeliveryDriverPersonName" />
+                <ScalarProperty Name="DeliveryVehicleID" ColumnName="DeliveryVehicleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Drinks">
+            <EntityTypeMapping TypeName="OasisRestaurantModel.Drink">
+              <MappingFragment StoreEntitySet="Drinks">
+                <ScalarProperty Name="DrinkID" ColumnName="DrinkID" />
+                <ScalarProperty Name="DrinkName" ColumnName="DrinkName" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Foods">
+            <EntityTypeMapping TypeName="OasisRestaurantModel.Food">
+              <MappingFragment StoreEntitySet="Foods">
+                <ScalarProperty Name="imagePath" ColumnName="imagePath" />
+                <ScalarProperty Name="FoodID" ColumnName="FoodID" />
+                <ScalarProperty Name="FoodName" ColumnName="FoodName" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="DiscountPrice" ColumnName="DiscountPrice" />
+                <ScalarProperty Name="MenuTypeID" ColumnName="MenuTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Locations">
+            <EntityTypeMapping TypeName="OasisRestaurantModel.Location">
+              <MappingFragment StoreEntitySet="Locations">
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+                <ScalarProperty Name="LocationName" ColumnName="LocationName" />
+                <ScalarProperty Name="LocationZipCode" ColumnName="LocationZipCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MenuTypes">
+            <EntityTypeMapping TypeName="OasisRestaurantModel.MenuType">
+              <MappingFragment StoreEntitySet="MenuType">
+                <ScalarProperty Name="MenuTypeID" ColumnName="MenuTypeID" />
+                <ScalarProperty Name="MenuTypeName" ColumnName="MenuTypeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderDeliveries">
+            <EntityTypeMapping TypeName="OasisRestaurantModel.OrderDelivery">
+              <MappingFragment StoreEntitySet="OrderDeliveries">
+                <ScalarProperty Name="OrderDeliveryID" ColumnName="OrderDeliveryID" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="DeliveryID" ColumnName="DeliveryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderDetails">
+            <EntityTypeMapping TypeName="OasisRestaurantModel.OrderDetail">
+              <MappingFragment StoreEntitySet="OrderDetails">
+                <ScalarProperty Name="OrderDetailID" ColumnName="OrderDetailID" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="FoodID" ColumnName="FoodID" />
+                <ScalarProperty Name="DrinkID" ColumnName="DrinkID" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="OasisRestaurantModel.Order">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="OrderDescription" ColumnName="OrderDescription" />
+                <ScalarProperty Name="OrderDateTime" ColumnName="OrderDateTime" />
+                <ScalarProperty Name="OrderPerson" ColumnName="OrderPerson" />
+                <ScalarProperty Name="DeliveryAddress" ColumnName="DeliveryAddress" />
+                <ScalarProperty Name="OrderPersonPhone" ColumnName="OrderPersonPhone" />
+                <ScalarProperty Name="OrderOriginalPrice" ColumnName="OrderOriginalPrice" />
+                <ScalarProperty Name="OrderStatusID" ColumnName="OrderStatusID" />
+                <ScalarProperty Name="OrderDiscountedPrice" ColumnName="OrderDiscountedPrice" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderStatus">
+            <EntityTypeMapping TypeName="OasisRestaurantModel.OrderStatu">
+              <MappingFragment StoreEntitySet="OrderStatus">
+                <ScalarProperty Name="OrderStatusID" ColumnName="OrderStatusID" />
+                <ScalarProperty Name="OrderStatusName" ColumnName="OrderStatusName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stores">
+            <EntityTypeMapping TypeName="OasisRestaurantModel.Store">
+              <MappingFragment StoreEntitySet="Stores">
+                <ScalarProperty Name="StoreID" ColumnName="StoreID" />
+                <ScalarProperty Name="StoreName" ColumnName="StoreName" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserAdmins">
+            <EntityTypeMapping TypeName="OasisRestaurantModel.UserAdmin">
+              <MappingFragment StoreEntitySet="UserAdmins">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Pwd" ColumnName="Pwd" />
+                <ScalarProperty Name="StoreID" ColumnName="StoreID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
